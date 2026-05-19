@@ -1,4 +1,3 @@
-```python id="n5q8vz"
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
@@ -115,4 +114,3 @@ ax.set_ylabel("Parte imaginaria")
 ax.legend()
 
 st.pyplot(fig)
-```
