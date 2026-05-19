@@ -31,86 +31,98 @@ n = st.number_input(
 )
 
 # ---------------------------------
-# Número complejo
+# Botón de ejecución
 # ---------------------------------
 
-z = complex(real, imag)
+if st.button("Ejecutar"):
 
-st.write(f"Número complejo: $z = {real} + {imag}i$")
+    # ---------------------------------
+    # Número complejo
+    # ---------------------------------
 
-# ---------------------------------
-# Cálculo de raíces
-# ---------------------------------
+    z = complex(real, imag)
 
-r = abs(z)
-theta = np.angle(z)
+    st.write(f"Número complejo: $z = {real} + {imag}i$")
 
-raices = []
+    # ---------------------------------
+    # Cálculo de raíces
+    # ---------------------------------
 
-for k in range(n):
-    modulo = r**(1/n)
-    argumento = (theta + 2*np.pi*k)/n
+    r = abs(z)
+    theta = np.angle(z)
 
-    w = modulo * (
-        np.cos(argumento)
-        + 1j*np.sin(argumento)
-    )
+    raices = []
 
-    raices.append(w)
+    for k in range(n):
 
-# ---------------------------------
-# Mostrar raíces
-# ---------------------------------
+        modulo = r**(1/n)
 
-st.subheader("Raíces enésimas")
+        argumento = (
+            theta + 2*np.pi*k
+        ) / n
 
-for i, w in enumerate(raices):
-    st.write(
-        f"$w_{i} = "
-        f"{w.real:.4f} "
-        f"+ "
-        f"{w.imag:.4f}i$"
-    )
+        w = modulo * (
+            np.cos(argumento)
+            + 1j*np.sin(argumento)
+        )
 
-# ---------------------------------
-# Gráfico
-# ---------------------------------
+        raices.append(w)
 
-fig, ax = plt.subplots(figsize=(6, 6))
+    # ---------------------------------
+    # Mostrar raíces
+    # ---------------------------------
 
-# número original
-ax.plot(
-    z.real,
-    z.imag,
-    'o',
-    markersize=10,
-    label='z'
-)
+    st.subheader("Raíces enésimas")
 
-# raíces
-for i, w in enumerate(raices):
+    for i, w in enumerate(raices):
+
+        st.write(
+            f"$w_{i} = "
+            f"{w.real:.4f} "
+            f"+ "
+            f"{w.imag:.4f}i$"
+        )
+
+    # ---------------------------------
+    # Gráfico
+    # ---------------------------------
+
+    fig, ax = plt.subplots(figsize=(6, 6))
+
+    # número original
     ax.plot(
-        w.real,
-        w.imag,
+        z.real,
+        z.imag,
         'o',
-        markersize=8,
-        label=f'raíz {i}'
+        markersize=10,
+        label='z'
     )
 
-# ejes
-ax.axhline(0)
-ax.axvline(0)
+    # raíces
+    for i, w in enumerate(raices):
 
-# aspecto cuadrado
-ax.set_aspect('equal')
+        ax.plot(
+            w.real,
+            w.imag,
+            'o',
+            markersize=8,
+            label=f'raíz {i}'
+        )
 
-# grilla
-ax.grid(True)
+    # ejes
+    ax.axhline(0)
+    ax.axvline(0)
 
-# etiquetas
-ax.set_xlabel("Parte real")
-ax.set_ylabel("Parte imaginaria")
+    # aspecto cuadrado
+    ax.set_aspect('equal')
 
-ax.legend()
+    # grilla
+    ax.grid(True)
 
-st.pyplot(fig)
+    # etiquetas
+    ax.set_xlabel("Parte real")
+    ax.set_ylabel("Parte imaginaria")
+
+    ax.legend()
+
+    st.pyplot(fig)
