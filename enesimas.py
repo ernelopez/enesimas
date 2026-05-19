@@ -1,15 +1,46 @@
+```python id="n5q8vz"
+import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
+st.title("Raíces enésimas de un número complejo")
+
+st.write(
+    "Ingresá un número complejo y un valor de n "
+    "para calcular y graficar sus raíces enésimas."
+)
+
 # ---------------------------------
-# Datos de entrada
+# Entrada de datos
 # ---------------------------------
 
-z = 3 + 4j      # número complejo
-n = 5           # raíz enésima
+real = st.number_input(
+    "Parte real",
+    value=1.0
+)
+
+imag = st.number_input(
+    "Parte imaginaria",
+    value=0.0
+)
+
+n = st.number_input(
+    "Valor de n",
+    min_value=1,
+    step=1,
+    value=3
+)
 
 # ---------------------------------
-# Cálculo de raíces enésimas
+# Número complejo
+# ---------------------------------
+
+z = complex(real, imag)
+
+st.write(f"Número complejo: $z = {real} + {imag}i$")
+
+# ---------------------------------
+# Cálculo de raíces
 # ---------------------------------
 
 r = abs(z)
@@ -22,7 +53,8 @@ for k in range(n):
     argumento = (theta + 2*np.pi*k)/n
 
     w = modulo * (
-        np.cos(argumento) + 1j*np.sin(argumento)
+        np.cos(argumento)
+        + 1j*np.sin(argumento)
     )
 
     raices.append(w)
@@ -31,18 +63,23 @@ for k in range(n):
 # Mostrar raíces
 # ---------------------------------
 
-print("Raíces enésimas:")
+st.subheader("Raíces enésimas")
 
 for i, w in enumerate(raices):
-    print(f"w_{i} = {w}")
+    st.write(
+        f"$w_{i} = "
+        f"{w.real:.4f} "
+        f"+ "
+        f"{w.imag:.4f}i$"
+    )
 
 # ---------------------------------
 # Gráfico
 # ---------------------------------
 
-fig, ax = plt.subplots(figsize=(6,6))
+fig, ax = plt.subplots(figsize=(6, 6))
 
-# raíz original
+# número original
 ax.plot(
     z.real,
     z.imag,
@@ -72,8 +109,10 @@ ax.set_aspect('equal')
 ax.grid(True)
 
 # etiquetas
-ax.set_xlabel('Parte real')
-ax.set_ylabel('Parte imaginaria')
+ax.set_xlabel("Parte real")
+ax.set_ylabel("Parte imaginaria")
 
-plt.legend()
-plt.show()
+ax.legend()
+
+st.pyplot(fig)
+```
